@@ -1367,28 +1367,32 @@ footer {
 
 .footer-social {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   margin-top: 24px;
 }
 
 .social-btn {
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid rgba(212, 175, 55, 0.25);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
-  font-size: 14px;
+  color: var(--gold-light);
+  font-size: 20px;
   cursor: none;
-  transition: all .3s;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .social-btn:hover {
+  background: var(--gold);
   border-color: var(--gold);
-  color: var(--gold);
-  transform: translateY(-3px);
+  color: var(--black);
+  transform: translateY(-6px) rotate(8deg);
+  box-shadow: 0 12px 24px rgba(201, 169, 110, 0.4);
 }
 
 .footer-col h4 {

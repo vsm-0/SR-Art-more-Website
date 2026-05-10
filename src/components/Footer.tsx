@@ -17,15 +17,24 @@ export default function Footer({ onNavigate }: FooterProps) {
             Handcrafted luxury press-on nails made with love in India. 
             We believe every woman deserves to feel extraordinary, every single day.
           </p>
-          <div className="footer-social" style={{ justifyContent: 'flex-start', marginTop: '32px', gap: "15px", display: "flex" }}>
+          <div className="footer-social" style={{ marginTop: '32px' }}>
             {[
-              { label: "ig", href: "https://instagram.com/sr_artemore" },
-              { label: "fb", href: "https://facebook.com/sr_artemore" },
-              { label: "▶", href: "https://youtube.com" },
-              { label: "P", href: "https://pinterest.com" },
-              { label: "wa", href: "https://wa.me" },
+              { icon: "ri-instagram-line", href: "https://instagram.com/sr_artemore", label: "Instagram" },
+              { icon: "ri-facebook-fill", href: "https://facebook.com/sr_artemore", label: "Facebook" },
+              { icon: "ri-youtube-fill", href: "https://youtube.com/sr_artemore", label: "YouTube" },
+              { icon: "ri-pinterest-fill", href: "https://pinterest.com/sr_artemore", label: "Pinterest" },
+              { icon: "ri-whatsapp-line", href: "https://wa.me/919999999999", label: "WhatsApp" },
             ].map(s => (
-              <a key={s.label} href={s.href} className="social-btn" target="_blank" rel="noopener noreferrer" style={{ fontSize: "14px", fontWeight: 500, color: "var(--text)" }}>{s.label}</a>
+              <a 
+                key={s.label} 
+                href={s.href} 
+                className="social-btn" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label={s.label}
+              >
+                <i className={s.icon}></i>
+              </a>
             ))}
           </div>
         </div>

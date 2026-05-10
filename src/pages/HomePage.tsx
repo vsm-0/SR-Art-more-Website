@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { products, categories, testimonials } from "../data/products";
 import ProductCard from "../components/ProductCard";
+import InstagramCarousel from "../components/InstagramCarousel";
 
 type Page =
   | "home" | "products" | "detail" | "cart" | "checkout" | "success" | "about" | "contact" | "favorites"
@@ -219,28 +220,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
       </section>
 
       {/* ================= INSTAGRAM ================= */}
-      <section className="section" style={{ background: "var(--white)", paddingBottom: 0 }}>
-        <div className="section-header reveal">
-          <p className="section-label">@sr_artemore</p>
-          <h2 className="section-title">Follow Our Journey</h2>
-          <p className="section-sub">
-            <a href="https://instagram.com/sr_artemore" style={{ color: "var(--gold)", textDecoration: "none" }}>@sr_artemore</a> — Tag us to be featured
-          </p>
-        </div>
-        <div className="insta-grid">
-          {instaImages.map((src, i) => (
-            <div key={i} className="insta-item">
-              <img src={src} alt={`Instagram ${i + 1}`} loading="lazy" />
-              <div className="insta-overlay">📸</div>
-            </div>
-          ))}
-        </div>
-        <div className="center" style={{ margin: "40px 0 80px" }}>
-          <a href="https://instagram.com/sr_artemore" target="_blank" rel="noopener noreferrer" className="btn-primary">
-            <span>FOLLOW ON INSTAGRAM</span>
-          </a>
-        </div>
-      </section>
+      <InstagramCarousel />
     </div>
   );
 }
