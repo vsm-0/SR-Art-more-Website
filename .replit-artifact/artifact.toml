@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "SR ARTÉMORE — Luxury Press-On Nails"
+version = "1.0.0"
+id = "artifacts/sr-artemore"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25873
+
+[services.development]
+run = "pnpm --filter @workspace/sr-artemore run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sr-artemore", "run", "build" ]
+publicDir = "artifacts/sr-artemore/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25873"
+BASE_PATH = "/"
