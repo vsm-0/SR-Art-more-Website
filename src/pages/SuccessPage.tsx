@@ -18,7 +18,7 @@ export default function SuccessPage({ onNavigate }: SuccessPageProps) {
 
   return (
     <div className="success-page">
-      
+
       {/* ✅ ICON */}
       <div className="success-icon">✓</div>
 
@@ -46,7 +46,7 @@ export default function SuccessPage({ onNavigate }: SuccessPageProps) {
           className="btn-primary-new"
           onClick={() => onNavigate("products")}
         >
-          Continue Shopping
+          <span>Continue Shopping</span>
         </button>
 
         <button
