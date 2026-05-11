@@ -216,9 +216,11 @@ function PhoneImageBanner() {
     <div style={{
       position: "relative",
       width: "100%",
-      height: "200px",
+      height: "280px",
       overflow: "hidden",
       flexShrink: 0,
+      marginBottom: "-40px",
+      zIndex: 1,
     }}>
       <img
         src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=900&q=80&fit=crop"
@@ -366,9 +368,10 @@ function Card({ children, bp }) {
       borderRadius: isPhone ? 0 : 4,
       border: isPhone ? "none" : "1px solid rgba(224,213,197,0.85)",
       boxShadow: isPhone ? "none" : "0 24px 64px rgba(0,0,0,0.1), 0 8px 20px rgba(0,0,0,0.06)",
-      padding: isPhone ? "28px 20px 48px" : bp === "tablet" ? "38px 42px" : "44px 48px",
+      padding: isPhone ? "40px 20px 48px" : bp === "tablet" ? "38px 42px" : "44px 48px",
       width: "100%", maxWidth: isPhone ? "100%" : bp === "tablet" ? 480 : 420,
-      position: "relative", overflow: "hidden",
+      position: "relative", overflow: "visible",
+      zIndex: 2,
     }}>
       {!isPhone && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: "linear-gradient(90deg, transparent, rgba(184,151,90,0.55), transparent)" }} />}
       {children}

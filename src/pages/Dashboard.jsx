@@ -608,17 +608,19 @@ export default function Dashboard() {
           .mob-menu   { display: flex !important; }
           .sidebar-col { display: none !important; }
           .logout-lbl  { display: none !important; }
+          .page-enter  { padding-top: 10px !important; }
         }
         @media (max-width: 560px) {
           .stats-row  { flex-direction: column !important; }
           .logout-lbl { display: none !important; }
+          .sidebar-col { display: none !important; }
         }
       `}</style>
 
       <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", background: "#f5f0e8" }}>
-        {/* <AnnouncementBar /> */}
+        <AnnouncementBar />
         {/* <Navbar onMenuClick={() => setDrawer(true)} /> */}
-        {/* <DashboardHeader /> */}
+        <DashboardHeader />
 
         <div className="page-enter" style={{ flex: 1, display: "flex", gap: 20, padding: "24px 12px", maxWidth: 1200, width: "100%", margin: "0 auto", alignItems: "flex-start" }}>
           <div className="sidebar-col" style={{ display: "flex" }}>
