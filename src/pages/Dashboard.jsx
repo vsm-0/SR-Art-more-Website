@@ -127,7 +127,7 @@ const dangerBtn = () => ({
 // ANNOUNCEMENT BAR
 // ─────────────────────────────────────────────────────────────────────────────
 function AnnouncementBar() {
-  const items = ["FREE SHIPPING ON ORDERS ABOVE ₹999","100% HANDMADE","AURORA CHROME NAILS","REUSABLE PRESS-ON SETS","SIZES XS · S · M · L"];
+  const items = ["FREE SHIPPING ON ORDERS ABOVE £999","100% HANDMADE","AURORA CHROME NAILS","REUSABLE PRESS-ON SETS","SIZES XS · S · M · L"];
   const all = [...items, ...items];
   return (
     <div style={{ background: T.black, borderBottom: `1px solid ${T.border}`, padding: "7px 0", overflow: "hidden" }}>

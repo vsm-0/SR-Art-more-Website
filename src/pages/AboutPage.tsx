@@ -82,8 +82,18 @@ export default function AboutPage({ onNavigate }: AboutPageProps) {
 
       <section className="brand-section" style={{ padding: "120px 30px", textAlign: "center", background: "white" }}>
         <div className="reveal">
-          <p style={{ fontFamily: "'Jost', sans-serif", fontSize: "14px", letterSpacing: "4px", color: "var(--gold)", textTransform: "uppercase", marginBottom: "16px", fontWeight: 600 }}>The Brand</p>
-          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "72px", color: "var(--gold)", fontWeight: 600, marginBottom: "24px", lineHeight: 1.1 }}>SR Artémore</h2>
+          <p style={{ fontFamily: "'Jost', sans-serif", fontSize: "14px", letterSpacing: "4px", color: "var(--gold)", textTransform: "uppercase", marginBottom: "32px", fontWeight: 600 }}>The Brand</p>
+          <div style={{ marginBottom: "40px", maxWidth: "300px", margin: "0 auto 40px" }}>
+            <img 
+              src="/4.png" 
+              alt="SR Artémore Logo" 
+              style={{ 
+                width: "100%", 
+                height: "auto", 
+                filter: "brightness(0.9)" 
+              }} 
+            />
+          </div>
           <p style={{ fontSize: "20px", color: "var(--gold)", letterSpacing: "1.5px", fontWeight: 600, textTransform: "uppercase" }}>
             Luxury press-on nails & accessories<br/>
             <span style={{ fontSize: "16px", fontStyle: "italic", textTransform: "none", opacity: 0.9 }}>elegantly Handcrafted</span>

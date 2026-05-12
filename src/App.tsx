@@ -45,7 +45,7 @@ function AppInner() {
     });
   };
 
-  const showFooter = page !== "checkout" && page !== "success";
+  const showFooter = page !== "checkout" && page !== "success" && page !== "login";
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
@@ -53,9 +53,8 @@ function AppInner() {
       {/* Hide cursor on mobile later inside component */}
       <CustomCursor />
 
-      <AnnouncementBar />
-
-      <Header currentPage={page as any} onNavigate={navigate as any} />
+      {page !== "login" && <AnnouncementBar />}
+      {page !== "login" && <Header currentPage={page as any} onNavigate={navigate as any} />}
 
       {/* Main Content */}
       <main className="flex-grow w-full">

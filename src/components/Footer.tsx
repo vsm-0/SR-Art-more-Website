@@ -80,7 +80,7 @@ export default function Footer({ onNavigate }: FooterProps) {
             <li><a onClick={() => onNavigate("shipping")}>Shipping Policy</a></li>
             <li><a onClick={() => onNavigate("privacy")}>Privacy Policy</a></li>
             <li><a onClick={() => onNavigate("terms")}>Terms & Conditions</a></li>
-            <li><a onClick={() => onNavigate("faq")}>FAQ</a></li>
+            <li><a onClick={() => onNavigate("contact")}>FAQ</a></li>
           </ul>
         </div>
       </div>

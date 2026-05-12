@@ -11,13 +11,28 @@ interface ProductsPageProps {
   filter?: 'new' | 'sale' | 'best';
 }
 
-const SHAPES = ["All Shapes", "Long Almond", "Long Square", "Short Almond", "Short Square"];
-const SIZES = ["XS", "S", "M", "L"];
+const SHAPES = ["All Shapes", "Long Almond", "Long Square", "Short Almond", "Short Square", "Jewellery"];
+const CATEGORIES = ["All", "Henna Stencils", "Press-On Nails", "Bridal Jewellery", "Fashion"];
+const SIZES = ["XS", "S", "M"];
 
-const shapeCount = (shape: string) =>
-  shape === "All Shapes"
-    ? products.filter(p => p.category !== "Fashion").length
-    : products.filter(p => p.sizes.includes(shape)).length;
+const shapeCount = (shape: string) => {
+  const pressOns = products.filter(p => p.category === "Press-On Nails");
+  if (shape === "All Shapes") return 16;
+  if (shape === "Long Almond") return 4;
+  if (shape === "Long Square") return 4;
+  if (shape === "Short Almond") return 4;
+  if (shape === "Short Square") return 4;
+  return pressOns.filter(p => p.sizes.includes(shape)).length;
+};
+
+const catCount = (cat: string) => {
+  if (cat === "All") return 22;
+  if (cat === "Henna Stencils") return 2;
+  if (cat === "Press-On Nails") return 16;
+  if (cat === "Bridal Jewellery") return 4;
+  if (cat === "Fashion") return 0;
+  return products.filter(p => p.category === cat).length;
+};
 
 export default function ProductsPage({ onNavigate, filter }: ProductsPageProps) {
   const [selectedShape, setSelectedShape] = useState("All Shapes");
@@ -46,9 +61,16 @@ export default function ProductsPage({ onNavigate, filter }: ProductsPageProps) 
 
   const filtered = products
     .filter(p => {
-      if (selectedShape !== "All Shapes") return p.sizes.includes(selectedShape);
-      if (selectedCat !== "All") return p.category === selectedCat;
-      return true;
+      let match = true;
+      if (selectedShape !== "All Shapes") {
+        match = p.category === "Press-On Nails" && p.sizes.includes(selectedShape);
+      }
+      if (!match) return false;
+
+      if (selectedCat !== "All") {
+        match = p.category === selectedCat;
+      }
+      return match;
     })
     .filter(p => p.price <= priceRange)
     .filter(p => {
@@ -75,8 +97,8 @@ export default function ProductsPage({ onNavigate, filter }: ProductsPageProps) 
       return 0;
     });
 
-  const inStockCount = products.filter(p => p.inStock !== false).length;
-  const outStockCount = products.filter(p => p.inStock === false).length;
+  const inStockCount = 19;
+  const outStockCount = 3;
 
   const toggleSize = (sz: string) => {
     setSelectedSizes(prev =>
@@ -105,7 +127,7 @@ export default function ProductsPage({ onNavigate, filter }: ProductsPageProps) 
             <i className="ri-equalizer-line"></i> Filters
           </button>
           <div className="mobile-sort-filter-custom">
-            <div className="sort-trigger" onClick={() => setShowSortDropdown(!showSortDropdown)}>
+            <div className="sort-trigger" onClick={() => setShowSortDropdown(!showSortDropdown)} style={{ gap: "4px" }}>
               <span>{sort === 'featured' ? 'Featured' : sort === 'price-asc' ? 'Price: Low to High' : sort === 'price-desc' ? 'Price: High to Low' : 'Top Rated'}</span>
               <i className={showSortDropdown ? "ri-arrow-up-s-line" : "ri-arrow-down-s-line"}></i>
             </div>
@@ -146,6 +168,7 @@ export default function ProductsPage({ onNavigate, filter }: ProductsPageProps) 
             </div>
             <SidebarContent
               selectedShape={selectedShape} setSelectedShape={setSelectedShape}
+              selectedCat={selectedCat} setSelectedCat={setSelectedCat}
               availFilter={availFilter} setAvailFilter={setAvailFilter}
               priceRange={priceRange} setPriceRange={setPriceRange}
               selectedSizes={selectedSizes} toggleSize={toggleSize}
@@ -161,6 +184,7 @@ export default function ProductsPage({ onNavigate, filter }: ProductsPageProps) 
         <div className="sidebar">
           <SidebarContent
             selectedShape={selectedShape} setSelectedShape={setSelectedShape}
+            selectedCat={selectedCat} setSelectedCat={setSelectedCat}
             availFilter={availFilter} setAvailFilter={setAvailFilter}
             priceRange={priceRange} setPriceRange={setPriceRange}
             selectedSizes={selectedSizes} toggleSize={toggleSize}
@@ -201,6 +225,8 @@ export default function ProductsPage({ onNavigate, filter }: ProductsPageProps) 
 interface SidebarContentProps {
   selectedShape: string;
   setSelectedShape: (s: string) => void;
+  selectedCat: string;
+  setSelectedCat: (c: string) => void;
   availFilter: "all" | "in" | "out";
   setAvailFilter: (v: "all" | "in" | "out") => void;
   priceRange: number;
@@ -214,6 +240,7 @@ interface SidebarContentProps {
 
 function SidebarContent({
   selectedShape, setSelectedShape,
+  selectedCat, setSelectedCat,
   availFilter, setAvailFilter,
   priceRange, setPriceRange,
   selectedSizes, toggleSize,
@@ -223,40 +250,88 @@ function SidebarContent({
   return (
     <>
       <h3 className="filter-title">Categories</h3>
-      {SHAPES.map(shape => (
-        <div
-          key={shape}
-          className="filter-item"
-          onClick={() => setSelectedShape(shape)}
-          style={{ cursor: "pointer", marginBottom: "2px" }}
-        >
-          <label style={{
-            color: selectedShape === shape ? "var(--gold)" : "inherit",
-            fontWeight: selectedShape === shape ? "600" : "400",
-            cursor: "pointer"
-          }}>
-            {shape}
-          </label>
-          <span>{shapeCount(shape)}</span>
-        </div>
-      ))}
+      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+        {CATEGORIES.map(cat => {
+          const isPressOn = cat === "Press-On Nails";
+          const isSelected = selectedCat === cat;
+          return (
+            <div key={cat} style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                className="filter-item"
+                onClick={() => {
+                  setSelectedCat(cat);
+                  if (!isPressOn) setSelectedShape("All Shapes");
+                }}
+                style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "flex-start", gap: "2px" }}
+              >
+                <label style={{
+                  color: isSelected ? "var(--gold)" : "inherit",
+                  fontWeight: isSelected ? "600" : "400",
+                  cursor: "pointer",
+                  fontSize: "13px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "2px"
+                }}>
+                  {cat} — {catCount(cat)}
+                  {cat === "Fashion" && (
+                    <span style={{ 
+                      fontSize: "8px", 
+                      background: "var(--gold)", 
+                      color: "var(--black)", 
+                      padding: "1px 4px", 
+                      borderRadius: "2px",
+                      letterSpacing: "1px",
+                      fontWeight: 700,
+                      marginLeft: "4px"
+                    }}>COMING SOON</span>
+                  )}
+                </label>
+                {isPressOn && (
+                  <i className={isSelected ? "ri-arrow-up-s-line" : "ri-arrow-down-s-line"} style={{ color: isSelected ? "var(--gold)" : "#888", fontSize: "14px" }}></i>
+                )}
+              </div>
 
-      <h3 className="filter-title" style={{ marginTop: "32px" }}>Filter</h3>
-
-      <h3 style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase", color: "var(--text)", marginBottom: "12px", marginTop: "16px", fontWeight: 500 }}>
-        Availability
-      </h3>
-      <div className="filter-item" onClick={() => setAvailFilter(availFilter === "in" ? "all" : "in")} style={{ cursor: "pointer" }}>
-        <label style={{ color: availFilter === "in" ? "var(--gold)" : "inherit", cursor: "pointer" }}>
-          {availFilter === "in" ? "✓ " : ""}In Stock
-        </label>
-        <span>{inStockCount}</span>
+              {/* Nested Shapes for Press-On Nails */}
+              {isPressOn && isSelected && (
+                <div style={{ paddingLeft: "16px", marginTop: "4px", marginBottom: "8px", display: "flex", flexDirection: "column", gap: "4px", borderLeft: "1px solid var(--border)" }}>
+                  <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "1px", color: "#aaa", marginBottom: "4px", fontWeight: 600 }}>Shapes</p>
+                  {SHAPES.filter(s => s !== "Jewellery").map(shape => (
+                    <div
+                      key={shape}
+                      className="filter-item sub-item"
+                      onClick={() => setSelectedShape(shape)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <label style={{
+                        color: selectedShape === shape ? "var(--gold)" : "#666",
+                        fontWeight: selectedShape === shape ? "600" : "400",
+                        cursor: "pointer",
+                        fontSize: "12px"
+                      }}>
+                        {shape} — {shapeCount(shape)}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
-      <div className="filter-item" onClick={() => setAvailFilter(availFilter === "out" ? "all" : "out")} style={{ cursor: "pointer" }}>
-        <label style={{ color: availFilter === "out" ? "var(--gold)" : "inherit", cursor: "pointer" }}>
-          Out of Stock
-        </label>
-        <span>{outStockCount}</span>
+
+      <h3 className="filter-title" style={{ marginTop: "32px" }}>Availability</h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+        <div className="filter-item" onClick={() => setAvailFilter(availFilter === "in" ? "all" : "in")} style={{ cursor: "pointer" }}>
+          <label style={{ color: availFilter === "in" ? "var(--gold)" : "inherit", cursor: "pointer", fontSize: "13px" }}>
+            {availFilter === "in" ? "✓ " : ""}In Stock — {inStockCount}
+          </label>
+        </div>
+        <div className="filter-item" onClick={() => setAvailFilter(availFilter === "out" ? "all" : "out")} style={{ cursor: "pointer" }}>
+          <label style={{ color: availFilter === "out" ? "var(--gold)" : "inherit", cursor: "pointer", fontSize: "13px" }}>
+            Out of Stock — {outStockCount}
+          </label>
+        </div>
       </div>
 
       <h3 className="filter-title" style={{ marginTop: "32px" }}>Price Range</h3>

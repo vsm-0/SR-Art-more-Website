@@ -796,21 +796,26 @@ nav.scrolled .logo-svg {
 /* PRODUCT CARDS */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  padding: 20px 0;
 }
 
 .product-card {
-  background: #f5f0e8;
-  cursor: none;
+  background: #fdfaf6;
+  cursor: pointer;
   overflow: hidden;
-  transition: box-shadow .3s ease, transform .3s ease;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(201, 169, 110, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 .product-card:hover {
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
-  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(184, 151, 90, 0.15);
+  transform: translateY(-8px);
+  border-color: rgba(184, 151, 90, 0.3);
 }
 
 .product-img {
