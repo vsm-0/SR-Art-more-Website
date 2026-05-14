@@ -89,6 +89,7 @@ export default function ProductDetailPage({
   const [selectedSize, setSelectedSize] = useState(product.sizes[0] || "");
   const [qty, setQty] = useState(1);
   const [activeTab, setActiveTab] = useState<"description" | "reviews">("description");
+  const [showAllReviews, setShowAllReviews] = useState(false);
 
   const { addToCart } = useCart();
   const { show } = useNotif();
@@ -274,16 +275,21 @@ export default function ProductDetailPage({
           </div>
 
           {/* Features */}
-          <div className="detail-features" style={{ marginTop: "28px" }}>
+          <div className="features-grid-container" style={{ marginTop: "28px" }}>
             {[
-              "100% Handmade — crafted individually in our studio",
-              "Reusable up to 10+ wears with proper care",
-              "Includes application kit & adhesive tabs",
-              "Free shipping on orders above £50",
-            ].map((text) => (
-              <div key={text} className="feature-row">
-                <span className="feature-icon">✦</span>
-                <span className="feature-text">{text}</span>
+              { title: "100% Handmade", sub: "crafted in our studio", icon: "✦" },
+              { title: "Reusable", sub: "up to 10+ wears", icon: "ri-refresh-line" },
+              { title: "Application Kit", sub: "& tabs included", icon: "ri-checkbox-line" },
+              { title: "Trusted by 1000+", sub: "happy customers", icon: "ri-heart-line" },
+            ].map((f, i) => (
+              <div key={i} style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
+                <div style={{ color: "var(--gold)", fontSize: "16px", marginTop: "2px" }}>
+                  {f.icon.startsWith("ri-") ? <i className={f.icon}></i> : <span>{f.icon}</span>}
+                </div>
+                <div>
+                  <div style={{ fontSize: "12px", fontWeight: "600", color: "var(--text)" }}>{f.title}</div>
+                  <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>{f.sub}</div>
+                </div>
               </div>
             ))}
           </div>
@@ -318,7 +324,7 @@ export default function ProductDetailPage({
                 transition: "color 0.2s",
               }}
             >
-              {tab === "reviews" ? `Review (${sampleReviews.length})` : "Description"}
+              {tab === "reviews" ? `REVIEWS (${product.reviews})` : "DESCRIPTION"}
             </button>
           ))}
         </div>
@@ -380,7 +386,7 @@ export default function ProductDetailPage({
             </div>
 
             {/* Individual reviews */}
-            {sampleReviews.map((review) => (
+            {(showAllReviews ? sampleReviews.slice(0, 3) : sampleReviews.slice(0, 2)).map((review) => (
               <div key={review.id} style={{ borderBottom: "1px solid var(--border, #eee)", paddingBottom: "24px" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px", flexWrap: "wrap", gap: "8px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -415,6 +421,35 @@ export default function ProductDetailPage({
                 </p>
               </div>
             ))}
+
+            {!showAllReviews && (
+              <div style={{ textAlign: "center", marginTop: "12px" }}>
+                <button
+                  onClick={() => setShowAllReviews(true)}
+                  style={{
+                    background: "none",
+                    border: "1px solid var(--gold)",
+                    color: "var(--gold)",
+                    padding: "10px 24px",
+                    fontSize: "12px",
+                    letterSpacing: "1px",
+                    textTransform: "uppercase",
+                    cursor: "pointer",
+                    transition: "all 0.3s"
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.background = "var(--gold)";
+                    (e.currentTarget as HTMLButtonElement).style.color = "#fff";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLButtonElement).style.background = "none";
+                    (e.currentTarget as HTMLButtonElement).style.color = "var(--gold)";
+                  }}
+                >
+                  Give all reviews
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -447,6 +482,21 @@ export default function ProductDetailPage({
           }
           .qty-selector-new input {
             width: 32px !important;
+          }
+        }
+        .features-grid-container {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+        }
+        @media (max-width: 991px) {
+          .features-grid-container {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+        @media (max-width: 480px) {
+          .features-grid-container {
+            grid-template-columns: 1fr;
           }
         }
       `}</style>
