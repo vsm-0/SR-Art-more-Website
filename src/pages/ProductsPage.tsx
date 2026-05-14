@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { products } from "../data/products";
 import ProductCard from "../components/ProductCard";
 
@@ -127,7 +128,7 @@ export default function ProductsPage({ onNavigate, filter }: ProductsPageProps) 
             <i className="ri-equalizer-line"></i> Filters
           </button>
           <div className="mobile-sort-filter-custom">
-            <div className="sort-trigger" onClick={() => setShowSortDropdown(!showSortDropdown)} style={{ gap: "4px" }}>
+            <div className="sort-trigger" onClick={() => setShowSortDropdown(!showSortDropdown)}>
               <span>{sort === 'featured' ? 'Featured' : sort === 'price-asc' ? 'Price: Low to High' : sort === 'price-desc' ? 'Price: High to Low' : 'Top Rated'}</span>
               <i className={showSortDropdown ? "ri-arrow-up-s-line" : "ri-arrow-down-s-line"}></i>
             </div>
@@ -257,12 +258,12 @@ function SidebarContent({
           return (
             <div key={cat} style={{ display: "flex", flexDirection: "column" }}>
               <div
-                className="filter-item"
+                className={`filter-item ${isSelected ? 'active' : ''}`}
                 onClick={() => {
-                  setSelectedCat(cat);
+                  setSelectedCat(isSelected ? "All" : cat);
                   if (!isPressOn) setSelectedShape("All Shapes");
                 }}
-                style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "flex-start", gap: "2px" }}
+                style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 0" }}
               >
                 <label style={{
                   color: isSelected ? "var(--gold)" : "inherit",
@@ -293,28 +294,41 @@ function SidebarContent({
               </div>
 
               {/* Nested Shapes for Press-On Nails */}
-              {isPressOn && isSelected && (
-                <div style={{ paddingLeft: "16px", marginTop: "4px", marginBottom: "8px", display: "flex", flexDirection: "column", gap: "4px", borderLeft: "1px solid var(--border)" }}>
-                  <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "1px", color: "#aaa", marginBottom: "4px", fontWeight: 600 }}>Shapes</p>
-                  {SHAPES.filter(s => s !== "Jewellery").map(shape => (
-                    <div
-                      key={shape}
-                      className="filter-item sub-item"
-                      onClick={() => setSelectedShape(shape)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <label style={{
-                        color: selectedShape === shape ? "var(--gold)" : "#666",
-                        fontWeight: selectedShape === shape ? "600" : "400",
-                        cursor: "pointer",
-                        fontSize: "12px"
-                      }}>
-                        {shape} — {shapeCount(shape)}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <AnimatePresence>
+                {isPressOn && isSelected && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    style={{ overflow: "hidden", paddingLeft: "16px", marginTop: "4px", marginBottom: "8px", display: "flex", flexDirection: "column", gap: "2px", borderLeft: "2px solid var(--gold)" }}
+                  >
+                    <p style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "1.5px", color: "var(--gold)", marginBottom: "8px", fontWeight: 600, opacity: 0.8 }}>Available Shapes</p>
+                    {SHAPES.filter(s => s !== "Jewellery").map(shape => (
+                      <motion.div
+                        key={shape}
+                        whileHover={{ x: 5 }}
+                        className="filter-item sub-item"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedShape(shape);
+                        }}
+                        style={{ cursor: "pointer", padding: "6px 0" }}
+                      >
+                        <label style={{
+                          color: selectedShape === shape ? "var(--gold)" : "#666",
+                          fontWeight: selectedShape === shape ? "600" : "400",
+                          cursor: "pointer",
+                          fontSize: "12.5px",
+                          transition: "all 0.2s"
+                        }}>
+                          {shape} <span style={{ fontSize: "10px", opacity: 0.5, marginLeft: "4px" }}>({shapeCount(shape)})</span>
+                        </label>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           );
         })}

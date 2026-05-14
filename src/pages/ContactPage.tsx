@@ -459,13 +459,20 @@ export default function ContactPage() {
         @media (max-width: 1024px) {
           .contact-main-grid {
             grid-template-columns: 1fr;
-            padding: 40px;
+            padding: 40px 24px;
+            gap: 40px;
           }
           .contact-image-side {
-            display: none;
+            display: block;
+            order: -1; /* Move image to top on mobile */
+            height: 350px;
+          }
+          .image-wrapper {
+            border-radius: 20px;
           }
           .details-grid {
             grid-template-columns: 1fr 1fr;
+            gap: 20px;
           }
           .faq-list-premium {
             grid-template-columns: 1fr;
@@ -473,8 +480,19 @@ export default function ContactPage() {
         }
 
         @media (max-width: 640px) {
+          .contact-page-root {
+            padding: 40px 16px;
+          }
           .hero-title {
-            font-size: 48px;
+            font-size: 42px;
+          }
+          .contact-main-grid {
+            padding: 30px 20px;
+            border-radius: 24px;
+          }
+          .premium-form h2 {
+            text-align: center;
+            font-size: 28px !important;
           }
           .form-row {
             grid-template-columns: 1fr;
@@ -484,6 +502,18 @@ export default function ContactPage() {
           }
           .faq-section-contact {
             padding: 40px 20px;
+          }
+          .contact-image-side {
+            height: 280px;
+          }
+          .btn-send-message {
+            width: 100%;
+            justify-content: center;
+          }
+          .premium-form > div {
+             flex-direction: column;
+             align-items: center !important;
+             text-align: center;
           }
         }
       `}</style>

@@ -48,6 +48,11 @@ export default function Login({ onNavigate }: { onNavigate: (page: string) => vo
 
   return (
     <div className="login-page-root">
+      <button className="back-btn-luxury" onClick={() => onNavigate("home")}>
+        <i className="ri-arrow-left-line"></i>
+        <span>Back</span>
+      </button>
+
       <div className="login-container-new">
         {/* Left Side: Branding & Glassmorphism */}
         <div className="login-visual-panel">
@@ -261,8 +266,8 @@ export default function Login({ onNavigate }: { onNavigate: (page: string) => vo
           backdrop-filter: blur(15px);
           -webkit-backdrop-filter: blur(15px);
           border: 1px solid rgba(255, 255, 255, 0.18);
-          padding: 10px 14px;
-          border-radius: 12px;
+          padding: 8px 12px;
+          border-radius: 10px;
           color: white;
           position: relative;
           max-width: 100%;
@@ -345,8 +350,8 @@ export default function Login({ onNavigate }: { onNavigate: (page: string) => vo
         }
 
         .slider-arrow {
-          width: 24px;
-          height: 24px;
+          width: 20px;
+          height: 20px;
           border-radius: 50%;
           border: 1px solid rgba(255, 255, 255, 0.2);
           background: none;
@@ -356,7 +361,7 @@ export default function Login({ onNavigate }: { onNavigate: (page: string) => vo
           justify-content: center;
           cursor: pointer;
           transition: all 0.2s;
-          font-size: 12px;
+          font-size: 10px;
         }
 
         .slider-arrow:hover {
@@ -545,18 +550,120 @@ export default function Login({ onNavigate }: { onNavigate: (page: string) => vo
         }
 
         @media (max-width: 768px) {
+          .login-page-root {
+            padding: 10px;
+            padding-top: 60px;
+          }
           .login-container-new {
             height: auto;
             flex-direction: column;
+            border-radius: 16px;
           }
           .login-visual-panel {
-            display: none;
+            display: block;
+            height: 300px; /* Slightly taller to accommodate content */
+          }
+          .glass-overlay {
+            padding: 24px 20px;
+            justify-content: space-between; /* Pushes testimonial top, branding bottom */
+            align-items: center; /* Center align items horizontally */
+            text-align: center;
+          }
+          .visual-logo-top {
+            display: block;
+            width: 40px;
+            margin: 0 auto 12px; /* Center logo */
+          }
+          .visual-content {
+            max-width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          .visual-heading {
+            font-size: 9px;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+          }
+          .visual-text {
+            font-size: 13.5px;
+            max-width: 250px;
+            margin: 0 auto;
+          }
+          .testimonial-slider-glass {
+            max-width: 100%;
+            width: 100%; /* Full width for centering content */
+            padding: 6px 10px;
+            border-radius: 8px;
+          }
+          .testimonial-quote {
+            font-size: 10.5px;
+            margin-bottom: 2px;
+          }
+          .slider-arrow {
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+          }
+          .author-info {
+             width: 100%;
+             text-align: center;
+          }
+          .author-stars {
+            justify-content: center;
+            display: flex;
+          }
+          .slider-bottom-row {
+            justify-content: center;
+            gap: 15px;
           }
           .form-logo-mobile {
-            display: block;
+            display: none; /* Hide since it's now in the visual panel */
           }
           .login-form-panel {
-            padding: 40px 20px;
+            padding: 30px 20px;
+          }
+          .form-content-inner {
+            max-width: 100%;
+          }
+        }
+
+        .back-btn-luxury {
+          position: absolute;
+          top: 30px;
+          left: 30px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: none;
+          border: none;
+          color: var(--text);
+          font-family: 'Jost', sans-serif;
+          font-size: 13px;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          z-index: 10;
+        }
+
+        .back-btn-luxury i {
+          font-size: 18px;
+          transition: transform 0.3s ease;
+        }
+
+        .back-btn-luxury:hover {
+          color: var(--gold);
+        }
+
+        .back-btn-luxury:hover i {
+          transform: translateX(-4px);
+        }
+
+        @media (max-width: 768px) {
+          .back-btn-luxury {
+            top: 20px;
+            left: 20px;
           }
         }
       `}</style>
